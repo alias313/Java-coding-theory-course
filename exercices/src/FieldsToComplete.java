@@ -25,6 +25,8 @@ public class FieldsToComplete {
 
         // output.print and output.println show content! 
         output = System.out;
+        
+        // EXERCISE 3.1
 
         output.println("Implement the addition and multiplication tables of the field of 5 elements. "
                 + "Compute the inverses and check them using the previous multiplication table.");
@@ -103,6 +105,8 @@ public class FieldsToComplete {
 
         output.println(elemP);
 
+        // EXERCISE 3.2
+
         GaloisField.Element[] elems4 = gf4.element;
 
         // add table                
@@ -172,7 +176,7 @@ public class FieldsToComplete {
         output.println("");
 
 
-        // Complete 
+        // Complete
 GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneElement()};
                 GFPolynomial p1 = new GFPolynomial(coefsP1, gf2);
                 output.println("p1(x) = " + p1);
@@ -188,7 +192,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
                 output.println("Example pag 7");
            
                 output.println("");                
-                // Example pag 7
+                // Example pag 7 [EXERCISE 3.3]
                 GaloisField.Element[] coefsP3 = {gf2.oneElement(),gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),
                                                                     gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),
                                                                     gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement(),gf2.zeroElement() ,gf2.oneElement()};
@@ -207,7 +211,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         
         
         
-        // Factorization Exercise 9 page 18
+        // Factorization Exercise 9 page 18 [EXERCISE 3.4]
         output.println("");
         output.println("Factorization Exercise 9 page 18");
         output.println("In $F_2[x]$, factor the following polynomials $x^2+1, x^2+x+1,x^2+x$.");
@@ -229,7 +233,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         
         
         
-        // division algorithm in F_p[x] page 24 example 4.7
+        // division algorithm in F_p[x] page 24 example 4.7 [EXERCISE 3.5]
         output.println("");
         output.println("division algorithm in F_p[x] page 24 example 4.7");
         output.println("In $F_{13}[x]$, let $a(x)=x^8+x^6+10x^4+10x^3+8x^2+2x+8$ "
@@ -253,7 +257,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         
         
         
-        // Exercise 11 page 28
+        // Exercise 11 page 28 [EXERCISE 3.6 & 3.7]
         output.println("");
         output.println("Exercise 11 page 28");
         output.println("Given  $p(x)=x^2-x-1$  in $F_3[x]$, construct the field $F_3[x] \\mod p(x)$, "
@@ -329,7 +333,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         output.println();
 
         // abstract propereties of finite fields
-        // Theorem 5.2 pag 31 order
+        // Theorem 5.2 pag 31 order [EXERCISE 3.8]
         output.println("");
         output.println("Theorem 5.2 pag 31 order");
         output.println("Using $F_{13}$ show that if $t$ is the order or $\\alpha$, "
@@ -357,7 +361,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         
         
         
-        // Teorem 5.8 example 5.3 
+        // Teorem 5.8 example 5.3 [EXERCISE 3.9]
         output.println("");
         output.println("Teorem 5.8 example 5.3 ");
         output.println("Using  $F_{16}$ show that there are $\\phi(t)$ "
@@ -373,7 +377,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         
         
         
-        //  example 5.5 pag 37
+        //  example 5.5 pag 37 [EXERCISE 3.10]
         output.println("");
         output.println(" example 5.5 pag 37 ");
         output.println("In $F_7$ find a primitive root and compute its powers.");
@@ -386,7 +390,7 @@ GaloisField.Element[] coefsP1 = {gf2.oneElement(),gf2.zeroElement(),gf2.oneEleme
         
         
         
-        // Example 5.7 pag 42 minimal polynomial
+        // Example 5.7 pag 42 minimal polynomial [EXERCISE 3.11]
         output.println("");
         output.println(" Example 5.7 pag 42 minimal polynomial ");
         output.println("in $F_{25}$ find a primitive root and its primitive polynomial.");
