@@ -10,10 +10,10 @@ public class FieldsToComplete {
     public static java.io.PrintStream output;
 
     /**
-     * Método principal.
+     * Mï¿½todo principal.
      *
      * @param args argumentos pasados al programa.
-     * @throws Exception Si se produce alguna excepción.
+     * @throws Exception Si se produce alguna excepciï¿½n.
      */
     public static void main(String[] args) throws Exception {
 
