@@ -26,6 +26,14 @@ public class MainReedSolomonToComplete {
             // element is an array of GaloisField.Element
             GaloisField.Element[] elementsGF8 = gf8.element;
 
+            System.out.println("GaloisField8: " );
+
+            System.out.print("\t");
+            for (GaloisField.Element e : elementsGF8) {
+                System.out.print(e + "\t");
+            }
+            System.out.println();
+
             // Vector to store the code
             Vector<GFVector> code = new Vector();
 
@@ -50,6 +58,31 @@ public class MainReedSolomonToComplete {
              * GFVector codeword = new GFVector(codewordVec,gf8);
              */
 
+/*            System.out.print("\t");
+            for (int i = 0; i < 64; i++) {
+                // iterate over all 64 different coefficients (excluding 0)
+
+                for (GaloisField.Element e : coefs) {
+                    GFPolynomial polM = new GFPolynomial(coefs, gf8);
+                }
+                System.out.println();
+            } */
+            // I take alpha_1 through alpha_8 to be 0 through 7
+            coefs[0] = elementsGF8[1];
+            coefs[1] = elementsGF8[1];
+            GFPolynomial polM = new GFPolynomial(coefs, gf8);
+
+            System.out.println("PolM: " + polM);
+
+            GaloisField.Element[] codewordVec = new GaloisField.Element[elementsGF8.length];
+
+            for (int i=0; i<8; i++) {
+                codewordVec[i] = elementsGF8[i].mul(coefs[1]).add(coefs[0]);
+            }
+
+            GFVector codeword = new GFVector(codewordVec,gf8);
+
+            System.out.println("CODEWORD: " + codeword);
 
             // Compute the distance of the code and check with the theoretical value
 
