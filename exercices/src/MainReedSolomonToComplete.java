@@ -24,15 +24,18 @@ public class MainReedSolomonToComplete {
             ExtendedGaloisField gf8 = new ExtendedGaloisField(gf2, 3);
             // Acces the elements of the field GaloisField.Element using the attribute element
             // element is an array of GaloisField.Element
-            GaloisField.Element[] elementsGF8 = gf8.element;
+            GaloisField.Element[] elementsGF8 = {gf8.zeroElement(), gf8.zeroElement(), gf8.zeroElement(), gf8.zeroElement(),
+                                                gf8.zeroElement(), gf8.zeroElement(), gf8.zeroElement(), gf8.zeroElement()};
 
-            System.out.println("GaloisField8: " );
-
-            System.out.print("\t");
+            for (int i=0; i<8; i++) {
+                elementsGF8[i] = gf8.element[i].copy();
+            }
+            System.out.print("Evaluation points    ");
             for (GaloisField.Element e : elementsGF8) {
-                System.out.print(e + "\t");
+                System.out.print(e + "  ");
             }
             System.out.println();
+
 
             // Vector to store the code
             Vector<GFVector> code = new Vector();
@@ -58,31 +61,21 @@ public class MainReedSolomonToComplete {
              * GFVector codeword = new GFVector(codewordVec,gf8);
              */
 
-/*            System.out.print("\t");
-            for (int i = 0; i < 64; i++) {
-                // iterate over all 64 different coefficients (excluding 0)
-
-                for (GaloisField.Element e : coefs) {
-                    GFPolynomial polM = new GFPolynomial(coefs, gf8);
+             GaloisField.Element[] codewordVec = new GaloisField.Element[elementsGF8.length];
+             int first_degree_coef = -1;
+             for (int i=0; i<64; i++) {
+                // iterate over all 65 different input polynomials (including 0)
+                coefs[0] = gf8.element[i%8];
+                if (i%8 == 0) first_degree_coef++;
+                coefs[1] = gf8.element[first_degree_coef];
+                GFPolynomial polM = new GFPolynomial(coefs, gf8);
+                for (int j=0; j<8; j++) {
+                    codewordVec[j] = elementsGF8[j].mul(coefs[1]).add(coefs[0]); // For k=2 each output letter should be coefs[1]*elementsGF8[i]+coefs[0]
                 }
-                System.out.println();
-            } */
-            // I take alpha_1 through alpha_8 to be 0 through 7
-            coefs[0] = elementsGF8[1];
-            coefs[1] = elementsGF8[1];
-            GFPolynomial polM = new GFPolynomial(coefs, gf8);
-
-            System.out.println("PolM: " + polM);
-
-            GaloisField.Element[] codewordVec = new GaloisField.Element[elementsGF8.length];
-
-            for (int i=0; i<8; i++) {
-                codewordVec[i] = elementsGF8[i].mul(coefs[1]).add(coefs[0]);
+                GFVector codeword = new GFVector(codewordVec,gf8);
+                System.out.println(String.format("%15s %5s", polM + " ->", codeword));
             }
-
-            GFVector codeword = new GFVector(codewordVec,gf8);
-
-            System.out.println("CODEWORD: " + codeword);
+            
 
             // Compute the distance of the code and check with the theoretical value
 
