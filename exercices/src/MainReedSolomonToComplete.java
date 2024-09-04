@@ -64,7 +64,7 @@ public class MainReedSolomonToComplete {
              GaloisField.Element[] codewordVec = new GaloisField.Element[elementsGF8.length];
              int first_degree_coef = -1;
              for (int i=0; i<64; i++) {
-                // iterate over all 65 different input polynomials (including 0)
+                // iterate over all 64 different input polynomials (including 0)
                 coefs[0] = gf8.element[i%8];
                 if (i%8 == 0) first_degree_coef++;
                 coefs[1] = gf8.element[first_degree_coef];
@@ -75,7 +75,7 @@ public class MainReedSolomonToComplete {
                 GFVector codeword = new GFVector(codewordVec,gf8);
                 System.out.println(String.format("%15s %5s", polM + " ->", codeword));
             }
-            
+
 
             // Compute the distance of the code and check with the theoretical value
 
