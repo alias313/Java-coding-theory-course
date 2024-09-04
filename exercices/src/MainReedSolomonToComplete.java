@@ -73,17 +73,34 @@ public class MainReedSolomonToComplete {
                     codewordVec[j] = elementsGF8[j].mul(coefs[1]).add(coefs[0]); // For k=2 each output letter should be coefs[1]*elementsGF8[i]+coefs[0]
                 }
                 GFVector codeword = new GFVector(codewordVec,gf8);
+                code.add(i, codeword);
                 System.out.println(String.format("%15s %5s", polM + " ->", codeword));
             }
 
 
             // Compute the distance of the code and check with the theoretical value
-
-
+            System.out.println("Theoretical min distance: " + (elementsGF8.length-k+1));
+            int minDist = 8;
+            int dist;
+            for (GFVector vec1: code) {
+                for (GFVector vec2: code) {
+                    if (!vec1.sub(vec2).isZeroVector()) {
+                        dist = vec1.dist(vec2);
+                        if (dist < minDist) minDist = dist;
+                    }
+                }
+            }
+            System.out.println("Computed min distance: " + minDist);
             // Compute the minimum weight and check with the theoretical value
             // and with the distance value
-
-            
+            System.out.println("Theoretical min weight: " + (elementsGF8.length-k+1));
+            int minWeight = 8;
+            int weight;
+            for (GFVector vec: code) {
+                weight = vec.weight();
+                if (weight < minWeight) minWeight = weight;
+            }
+            System.out.println("Computed min weight: " + minWeight);
             
             // Error correction
             GFVector c1 = code.elementAt(10);
@@ -94,17 +111,24 @@ public class MainReedSolomonToComplete {
             c2.setElementAt(c1.elementAt(4).add(gf8.oneElement()), 4);
             c2.setElementAt(c1.elementAt(6).add(gf8.oneElement()), 6);
 
-            System.out.println("corrupted codeword : " + c2);
+            System.out.println("corrupted codeword (3 errors) : " + c2);
 
             //  Check how many codewords at distance 3
+            for (GFVector c : code) {
+                if (c.dist(c2) <= 3) {
+                    System.out.println("decoded codeword (dist. 3): " + c);
+                }
+            }
 
             // Introduce two more errors
+            c2.setElementAt(c1.elementAt(0).add(gf8.oneElement()), 4);
+            c2.setElementAt(c1.elementAt(7).add(gf8.oneElement()), 6);
 
-
+            System.out.println("corrupted codeword (5 errors) : " + c2);
             //  Check how many codewords at distance 5
             for (GFVector c : code) {
                 if (c.dist(c2) <= 5) {
-                    System.out.println("decoded codeword : " + c);
+                    System.out.println("decoded codeword (dist. 5): " + c);
                 }
             }
 
