@@ -119,8 +119,18 @@ public class MyFactorizationToComplete {
                     gf8.zeroElement()},
                 new GaloisField.Element[]{gf8.oneElement(),
                     gf8.oneElement()}}, gf8);
-            System.out.println("Bi: " + bi);
             brackets(bi, gf8);
+            GFBiPolynomial xBiPoly1 = new GFBiPolynomial(new GaloisField.Element[][]{
+                new GaloisField.Element[]{gf8.zeroElement()},
+                new GaloisField.Element[]{gf8.oneElement()}}, gf8);
+            
+            brackets(xBiPoly1, gf8);
+            GFBiPolynomial xyBiPoly1 = new GFBiPolynomial(new GaloisField.Element[][]{
+                new GaloisField.Element[]{gf8.zeroElement(),
+                    gf8.zeroElement()},
+                new GaloisField.Element[]{gf8.zeroElement(),
+                    gf8.oneElement()}}, gf8);
+            brackets(xyBiPoly1, gf8);
 
         } catch (GFException ex) {
         } catch (KoetterVardyException ex) {
@@ -130,12 +140,16 @@ public class MyFactorizationToComplete {
     public static Vector<GFPolynomial> factorization(GFBiPolynomial Q, int k)
                      throws KoetterVardyException {
 
-             GaloisField.Element[] coefs = new GaloisField.Element[k];
-             Vector<GFPolynomial> factors = new Vector<GFPolynomial>();
+        GaloisField.Element[] coefs = new GaloisField.Element[k];
+        Vector<GFPolynomial> factors = new Vector<GFPolynomial>();
 
-             _factor(Q, k, 0, coefs, factors);
+        _factor(Q, k, 0, coefs, factors);
+        
+        System.out.print("COEFS: ");
+        for (GaloisField.Element e: coefs) System.out.print(e + ", ");
+        System.out.println();
 
-             return factors;
+        return factors;
     }
     
     // To complete _factor
@@ -170,7 +184,7 @@ public class MyFactorizationToComplete {
             // use brackets function below.
             // that also needs to be implemented
             M = brackets(Q,field);
-
+            System.out.println("M polynomial iteration " + i + ": " + M + "\n");
 	    // find all the roots in F of the univariate polynomial
             // M(0,y);
             Vector<GaloisField.Element> roots = (M.xEval(field.zeroElement())).roots();
@@ -184,7 +198,7 @@ public class MyFactorizationToComplete {
                 coefs[i] = gamma;
 
                 // if i = k-1 then output coefs[0],...,coefs[k-1];
-                if (i == k - 1) {
+                if (i == (k - 1)) {
 
                     //McElice Corollary 12 pag 35. Exit condition
                     // If Q_k(x,0) = 0 then
@@ -201,19 +215,18 @@ public class MyFactorizationToComplete {
                     // Do it in 3 steps
                     // First use method shift to
                     // M_shift(x,y) <- M(x, y+gamma);
-                    
-                    
+                    M_shift = M.shift(field.zeroElement(), gamma);                
                     
                     // Second: 
                     // M_change_xy(x,y) <- M_shift(x,xy);
                     // You can use method eval and xBiPoly, xyBiPoly
-
+                    M_change_xy = M_shift.eval(xBiPoly, xyBiPoly);
 
                     // Third
                     // To compute
                     //M(x,y) <- <<M(x, xy+gamma)>>
                     // Use M and brackets method
-                    
+                    M = brackets(M_change_xy, field);
 
                     GFPolynomial eval = M.yEval(field.zeroElement());
                     if (eval.equals(zeroPoly)) {
@@ -226,30 +239,19 @@ public class MyFactorizationToComplete {
                 // Do it in 2 steps
                 // First use method shift to
                 // M_shift(x,y) <- M(x, y+gamma);
-                
-                
+                M_shift = M.shift(field.zeroElement(), gamma);                
                 
                 // Second
                 // M_change_xy(x,y) <- M_shift(x,xy);
                 // You can use method eval and xBiPoly, xyBiPoly
-                
-                
-                
-                
+                M_change_xy = M_shift.eval(xBiPoly, xyBiPoly);
                 
                 // _factor(M_{i+1}(x,y), k, i+1 coefs, factors);
                 // Make recursive call to _factor
-                
+                _factor(M_change_xy, k, i+1, coefs, factors);
 
                 }
-            }
-            
-
-            
-            
-            // Remove this line after completing
-            throw new RuntimeException("To complete");
-            
+            }            
             
         } catch (Exception e) {
             throw new KoetterVardyException("Factorization fails.",
@@ -264,7 +266,7 @@ public class MyFactorizationToComplete {
                 GF.zeroElement()},
             new GaloisField.Element[]{GF.zeroElement(),
                 GF.oneElement()}}, GF);
-        System.out.println("Input poly: " + Q);
+        //System.out.println("Input poly: " + Q);
         // First check if degree of x is more than 0
         if (Q.isZeroPoly()) return Q;
         // Evaluate x part of bivariate polynomial, if 0 divide by x, else return Qn;
@@ -273,7 +275,9 @@ public class MyFactorizationToComplete {
         while (Qn.xEval(GF.zeroElement()).isZeroPoly()) {
             Qn = Qn.mDiv(GF.oneElement(), 1, 0);
         }
-        System.out.println("Normalized poly: " + Qn);
+        //System.out.println("Normalized poly: " + Qn);
+        //System.out.println("Zero evaluation: " + Qn.xEval(GF.zeroElement()));
+        System.out.println("Roots of Zero eval: " + Qn.xEval(GF.zeroElement()).roots());
         return Qn;
     }
 }

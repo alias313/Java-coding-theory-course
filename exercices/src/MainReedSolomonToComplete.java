@@ -98,7 +98,7 @@ public class MainReedSolomonToComplete {
             int weight;
             for (GFVector vec: code) {
                 weight = vec.weight();
-                if (weight < minWeight) minWeight = weight;
+                if (weight < minWeight && !vec.isZeroVector()) minWeight = weight;
             }
             System.out.println("Computed min weight: " + minWeight);
             
