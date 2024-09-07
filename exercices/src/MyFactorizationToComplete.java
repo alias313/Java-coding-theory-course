@@ -114,6 +114,13 @@ public class MyFactorizationToComplete {
             //System.out.println("Factors=\n" + v + "\n");
 
             brackets(p, gf8);
+            GFBiPolynomial bi = new GFBiPolynomial(new GaloisField.Element[][]{
+                new GaloisField.Element[]{gf8.zeroElement(),
+                    gf8.zeroElement()},
+                new GaloisField.Element[]{gf8.oneElement(),
+                    gf8.oneElement()}}, gf8);
+            System.out.println("Bi: " + bi);
+            brackets(bi, gf8);
 
         } catch (GFException ex) {
         } catch (KoetterVardyException ex) {
@@ -257,8 +264,16 @@ public class MyFactorizationToComplete {
                 GF.zeroElement()},
             new GaloisField.Element[]{GF.zeroElement(),
                 GF.oneElement()}}, GF);
-        // Use methods xEval and mDiv
-        System.out.println(Q.mDiv(GF.oneElement(), Q.multiDegree()));
+        System.out.println("Input poly: " + Q);
+        // First check if degree of x is more than 0
+        if (Q.isZeroPoly()) return Q;
+        // Evaluate x part of bivariate polynomial, if 0 divide by x, else return Qn;
+        Qn = Q.copy();
+
+        while (Qn.xEval(GF.zeroElement()).isZeroPoly()) {
+            Qn = Qn.mDiv(GF.oneElement(), 1, 0);
+        }
+        System.out.println("Normalized poly: " + Qn);
         return Qn;
     }
 }
