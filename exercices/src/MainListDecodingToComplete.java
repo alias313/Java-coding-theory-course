@@ -113,7 +113,7 @@ public class MainListDecodingToComplete {
 
             // Introduce two more errors
             c2.setElementAt(c1.elementAt(0).add(gf8.oneElement()), 4);
-            c2.setElementAt(c1.elementAt(7).add(gf8.oneElement()), 6);
+            c2.setElementAt(c1.elementAt(3).add(gf8.oneElement()), 6);
 
             System.out.println("corrupted codeword (5 errors) : " + c2);
 
