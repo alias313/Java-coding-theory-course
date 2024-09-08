@@ -73,7 +73,7 @@ public class MainListDecodingToComplete {
                 code.add(i, codeword);
                 GFPolynomial polM = new GFPolynomial(coefs, gf8);
                 messagePolynomialsVec[i] = polM;
-                //System.out.println(String.format("%15s %5s", polM + " ->", codeword));
+                System.out.println(String.format("%15s %5s", polM + " ->", codeword));
             }
 
             // Compute the distance of the code and check with the theoretical value

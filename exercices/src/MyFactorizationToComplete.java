@@ -157,6 +157,7 @@ public class MyFactorizationToComplete {
 
         while (Qn.xEval(GF.zeroElement()).isZeroPoly()) {
             Qn = Qn.mDiv(GF.oneElement(), 1, 0);
+            System.out.println("Divided by x");
         }
         //System.out.println("Normalized poly: " + Qn);
         //System.out.println("Zero evaluation: " + Qn.xEval(GF.zeroElement()));
