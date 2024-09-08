@@ -58,18 +58,21 @@ public class MainListDecodingToComplete {
              */
 
              GaloisField.Element[] codewordVec = new GaloisField.Element[elementsGF8.length];
+             int numberOfCodewords = (int)Math.pow(elementsGF8.length, k);
+             GFPolynomial[] messagePolynomialsVec = new GFPolynomial[numberOfCodewords];
              int first_degree_coef = -1;
-             for (int i=0; i<64; i++) {
-                // iterate over all 64 different input polynomials (including 0)
+             for (int i=0; i<numberOfCodewords; i++) {
+                // iterate over all numberOfCodewords different input polynomials (including 0)
                 coefs[0] = gf8.element[i%8];
                 if (i%8 == 0) first_degree_coef++;
                 coefs[1] = gf8.element[first_degree_coef];
-                GFPolynomial polM = new GFPolynomial(coefs, gf8);
                 for (int j=0; j<8; j++) {
                     codewordVec[j] = elementsGF8[j].mul(coefs[1]).add(coefs[0]); // For k=2 each output letter should be coefs[1]*elementsGF8[i]+coefs[0]
                 }
                 GFVector codeword = new GFVector(codewordVec,gf8);
                 code.add(i, codeword);
+                GFPolynomial polM = new GFPolynomial(coefs, gf8);
+                messagePolynomialsVec[i] = polM;
                 //System.out.println(String.format("%15s %5s", polM + " ->", codeword));
             }
 
@@ -100,7 +103,7 @@ public class MainListDecodingToComplete {
             
             // Error correction
             GFVector c1 = code.elementAt(10);
-            System.out.println("codeword : " + c1);
+            System.out.println("codeword : " + messagePolynomialsVec[10] + "-> " + c1);
             // Introduce 3 errors
             GFVector c2 = c1.copy();
             c2.setElementAt(c1.elementAt(2).add(gf8.oneElement()), 2);
@@ -113,7 +116,7 @@ public class MainListDecodingToComplete {
 
             // Introduce two more errors
             c2.setElementAt(c1.elementAt(0).add(gf8.oneElement()), 4);
-            c2.setElementAt(c1.elementAt(3).add(gf8.oneElement()), 6);
+            c2.setElementAt(c1.elementAt(7).add(gf8.oneElement()), 6);
 
             System.out.println("corrupted codeword (5 errors) : " + c2);
 
@@ -153,21 +156,28 @@ public class MainListDecodingToComplete {
 
             System.out.println("Factors: " + v);
 
+            GFPolynomial closestPolynomial = new GFPolynomial(elementsGF8, gf8);
+            int minDistanceToC2 = 8;
             for (GFPolynomial gfp : v) {
                 GaloisField.Element[] ve = new GaloisField.Element[elementsGF8.length];
                 for (int s = 0; s < elementsGF8.length; s++) {
                     ve[s] = gfp.eval(elementsGF8[s]);
                 }
                 GFVector cv = new GFVector(ve, gf8);
-                System.out.println("polynomial: " + gfp + " codeword: " + cv);
+                if (minDistanceToC2 > c2.dist(cv)) {
+                    closestPolynomial = gfp;
+                    minDistanceToC2 = c2.dist(cv);
+                }
+                System.out.println(String.format("%15s %15s", gfp + " ->", "codeword: " + cv + " <-> dist to c2: " + c2.dist(cv)));
             }
+
+            System.out.println("Decoded polynomial: " + closestPolynomial);
 
         } catch (GFException ex) {
             Logger.getLogger(MainReedSolomonToComplete.class.getName()).log(Level.SEVERE, null, ex);
         } catch (KoetterVardyException ex) {
             Logger.getLogger(MainReedSolomonToComplete.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }            
             

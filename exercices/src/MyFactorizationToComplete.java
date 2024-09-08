@@ -31,10 +31,6 @@ public class MyFactorizationToComplete {
 
         _factor(Q, k, 0, coefs, factors);
         
-        System.out.print("COEFS: ");
-        for (GaloisField.Element e: coefs) System.out.print(e + ", ");
-        System.out.println();
-
         return factors;
     }
     
@@ -70,7 +66,7 @@ public class MyFactorizationToComplete {
             // use brackets function below.
             // that also needs to be implemented
             M = brackets(Q,field);
-            System.out.println("M polynomial iteration " + i + ": " + M + "\n");
+            System.out.println("M polynomial: " + M + "\n");
 	    // find all the roots in F of the univariate polynomial
             // M(0,y);
             Vector<GaloisField.Element> roots = (M.xEval(field.zeroElement())).roots();
@@ -82,6 +78,7 @@ public class MyFactorizationToComplete {
                 // Do it in 2 steps
                 gamma = roots.elementAt(j);
                 coefs[i] = gamma;
+                System.out.println("Calculated coefficient " + i + ": " + gamma);
 
                 // if i = k-1 then output coefs[0],...,coefs[k-1];
                 if (i == (k - 1)) {
