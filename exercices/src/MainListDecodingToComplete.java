@@ -143,8 +143,9 @@ public class MainListDecodingToComplete {
             }
 
             int cost = gf8.cardinality() * IntegerUtils.comb(m + 1, 2);
-
+            System.out.println("Cost: " + cost + ", k = " + k + "\n");
             int dy = KoetterVardy.dy_revlex(cost, k);
+            System.out.println("dy=" + dy + "\n");
             System.out.println("dy : " + dy);
 
             GFBiPolynomial p = KoetterVardy.interpolate(interpolSet, dy, k, 0);
