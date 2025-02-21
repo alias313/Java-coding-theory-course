@@ -62,6 +62,9 @@ public class BivariatePolynomials {
             GFBiPolynomial res = bip.add(bip2);
             System.out.println(res.toString());
             System.out.println(elementsGF8[47].add(elementsGF8[21]));
+            for (int i = 0; i < 255; i++) {
+                System.out.println(gf8.toPolynomial(elementsGF8[i]));
+            }
         } catch (GFException ex) {
             Logger.getLogger(MainReedSolomonToComplete.class.getName()).log(Level.SEVERE, null, ex);
         }
