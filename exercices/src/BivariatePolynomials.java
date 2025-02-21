@@ -20,8 +20,8 @@ public class BivariatePolynomials {
             GFBiPolynomial xBiPoly = new GFBiPolynomial(new GaloisField.Element[][]{{gf8.zeroElement()}, {gf8.oneElement()}}, gf8);
             System.out.println("xBiPoly: " + xBiPoly);
             GFBiPolynomial[] bip = new GFBiPolynomial[13];
-            for (int l = 0; l <= 12; ++l) {
-                bip[l] = oneBiPoly.mMul(gf8.oneElement(), 0, l);
+            for (int l = 0; l <= 5; ++l) {
+                bip[l] = oneBiPoly.mMul(gf8.oneElement(), 5-l, l);
                 System.out.println("bip: " + bip[l]);
             }
         } catch (GFException ex) {
