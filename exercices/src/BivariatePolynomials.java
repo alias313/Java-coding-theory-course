@@ -6,6 +6,7 @@ import jmoreira.pfc.galois.GFBiPolynomial;
 import jmoreira.pfc.galois.GFException;
 import jmoreira.pfc.galois.GaloisField;
 import jmoreira.pfc.galois.RootGaloisField;
+import jmoreira.pfc.galois.GFBiPolynomial.MultiDegree;
 
 public class BivariatePolynomials {
     public static void main(String[] args) {
@@ -61,8 +62,11 @@ public class BivariatePolynomials {
             GFBiPolynomial bip2 = new GFBiPolynomial(bip2_coef, gf8);
             GFBiPolynomial res = bip.add(bip2);
             System.out.println(res.toString());
+            //GFBiPolynomial mres = bip.mMul(elementsGF8[237], 3, 8);
+            //System.out.println(mres.toString());
+            System.out.println(bip.coefficient(0, 0).mul(elementsGF8[238]));
         } catch (GFException ex) {
-            Logger.getLogger(MainReedSolomonToComplete.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BivariatePolynomials.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
