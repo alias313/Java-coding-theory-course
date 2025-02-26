@@ -1,6 +1,7 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jmoreira.pfc.IntegerUtils;
 import jmoreira.pfc.galois.ExtendedGaloisField;
 import jmoreira.pfc.galois.GFBiPolynomial;
 import jmoreira.pfc.galois.GFException;
@@ -52,6 +53,7 @@ public class BivariatePolynomials {
             bip_coef[3][6] = elementsGF8[21];
             bip_coef[5][3] = elementsGF8[42];
             GFBiPolynomial bip = new GFBiPolynomial(bip_coef, gf8);
+
             GaloisField.Element[][] bip2_coef = new GaloisField.Element[6][7];
             for (int i = 0; i <= 5; i++) {
                 for (int j = 0; j <= 6; j++) {
@@ -60,11 +62,23 @@ public class BivariatePolynomials {
             }
             bip2_coef[3][6] = elementsGF8[47];
             GFBiPolynomial bip2 = new GFBiPolynomial(bip2_coef, gf8);
-            GFBiPolynomial res = bip.add(bip2);
-            System.out.println(res.toString());
+
+            // try adding polynomials
+            //GFBiPolynomial res = bip.add(bip2);
+            //System.out.println(res.toString());
+
+            // try monomial multiplication
             //GFBiPolynomial mres = bip.mMul(elementsGF8[237], 3, 8);
             //System.out.println(mres.toString());
-            System.out.println(bip.coefficient(0, 0).mul(elementsGF8[238]));
+
+            // test simple mul
+            //System.out.println(bip.coefficient(0, 0).mul(elementsGF8[238]));
+
+            // Binomial coefficient test
+            System.out.println(IntegerUtils.comb(21, 17));
+
+            // Shift coefficient function test
+            System.out.println(bip.coefficient(elementsGF8[9], elementsGF8[18], 3, 2)); // This returns 163
         } catch (GFException ex) {
             Logger.getLogger(BivariatePolynomials.class.getName()).log(Level.SEVERE, null, ex);
         }
